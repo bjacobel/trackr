@@ -8,7 +8,7 @@ interface SubmitProps {
 
 const Submit: React.FC<SubmitProps> = ({ submitFn }) => {
   return (
-    <Button className="mt-5" fullWidth={true} onClick={submitFn}>
+    <Button className="mt-8" fullWidth={true} onClick={submitFn}>
       Track
     </Button>
   );

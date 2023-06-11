@@ -1,5 +1,4 @@
 import { Slider as MaterialSlider } from '@material-tailwind/react';
-import clsx from 'clsx';
 
 interface SliderProps {
   category: string;
@@ -9,15 +8,19 @@ interface SliderProps {
 
 const Slider: React.FC<SliderProps> = ({ category, value, setFn }) => {
   return (
-    <div className="w-full mb-8">
-      <p className="mb-3">{category}</p>
-      <MaterialSlider
-        size="lg"
-        max={100}
-        step={10}
-        value={String(value * 10)}
-        onChange={event => setFn(parseInt(event.target.value) / 10)}
-      />
+    <div className="w-full mb-4">
+      <p className="mb-2">{category}</p>
+      <div className="flex items-center w-full">
+        <MaterialSlider
+          className=""
+          size="lg"
+          max={100}
+          step={10}
+          value={String(value * 10)}
+          onChange={event => setFn(parseInt(event.target.value) / 10)}
+        />
+        <p className="block w-8 text-right text-xl">{value}</p>
+      </div>
     </div>
   );
 };
