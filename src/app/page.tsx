@@ -1,6 +1,7 @@
 'use client';
 
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 
 import { TRACKR_CATS, HAS_CATS } from '@/constants';
 import Submit from '@/app/Submit';
@@ -10,11 +11,19 @@ import { createTrackrDatapoints } from '@/data/opentsdb';
 
 export default function Home() {
   const [state, dispatch] = useReducer(trackrReducer, initialState);
+  const [resultMessage, setResultMessage] = useState('');
+  const { pending } = useFormStatus();
+
+  const submit = async () => {
+    const tsdbResult = await createTrackrDatapoints(state);
+    dispatch({ type: 'clear' });
+    setResultMessage(tsdbResult.error || tsdbResult.response);
+  };
 
   return (
     <main className="h-screen bg-gray-100 font-sans leading-normal tracking-normal">
       <div className="w-full md:max-w-md mx-auto flex flex-wrap items-center justify-between py-3 px-4">
-        <div className="w-full mt-3">
+        <form className="w-full mt-3" action={submit}>
           {!HAS_CATS && <p className="w-full mb-auto text-center">Add some stuff to track!</p>}
           {TRACKR_CATS.map(category =>
             category.length ? (
@@ -26,8 +35,9 @@ export default function Home() {
               />
             ) : null,
           )}
-          <Submit submitFn={() => createTrackrDatapoints(state)} />
-        </div>
+          <Submit pending={pending} />
+        </form>
+        <p className="mt-6">{resultMessage}</p>
       </div>
     </main>
   );

@@ -1,15 +1,15 @@
 'use client';
 
-import { Button } from '@material-tailwind/react';
+import { Button, Spinner } from '@material-tailwind/react';
 
 interface SubmitProps {
-  submitFn: () => void;
+  pending: boolean;
 }
 
-const Submit: React.FC<SubmitProps> = ({ submitFn }) => {
+const Submit: React.FC<SubmitProps> = ({ pending }) => {
   return (
-    <Button className="mt-8" fullWidth={true} onClick={submitFn}>
-      Track
+    <Button className="h-12" disabled={pending} type="submit" fullWidth={true}>
+      {pending ? <Spinner className="w-full" /> : <p>Track</p>}
     </Button>
   );
 };
