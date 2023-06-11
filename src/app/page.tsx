@@ -17,7 +17,7 @@ export default function Home() {
   const submit = async () => {
     const tsdbResult = await createTrackrDatapoints(state);
     dispatch({ type: 'clear' });
-    setResultMessage(tsdbResult.error || tsdbResult.response);
+    setResultMessage(tsdbResult.error || tsdbResult.response || 'Tracked!');
   };
 
   return (
