@@ -24,7 +24,7 @@ export default function Home() {
     <main className="h-screen bg-gray-100 font-sans leading-normal tracking-normal">
       <div className="w-full md:max-w-md mx-auto flex flex-wrap items-center justify-between py-3 px-4">
         <form className="w-full mt-3" action={submit}>
-          {!HAS_CATS && <p className="w-full mb-auto text-center">Add some stuff to track!</p>}
+          {!HAS_CATS && <p className="w-full mb-5 text-center">Add some stuff to track!</p>}
           {TRACKR_CATS.map(category =>
             category.length ? (
               <Slider
@@ -35,7 +35,7 @@ export default function Home() {
               />
             ) : null,
           )}
-          <Submit pending={pending} />
+          <Submit disabled={!HAS_CATS} pending={pending} />
         </form>
         <p className="mt-6">{resultMessage}</p>
       </div>
