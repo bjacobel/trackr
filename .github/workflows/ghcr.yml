@@ -39,6 +39,7 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        build-args: "OPENTSDB_HOST=${{ vars.OPENTSDB_HOST }} NEXT_PUBLIC_TRACKD_RELATIVE=${{ vars.NEXT_PUBLIC_TRACKD_RELATIVE }}"
 
     - name: Tell Watchtower on my Homelab to pull this new image
       uses: fjogeleit/http-request-action@v1
