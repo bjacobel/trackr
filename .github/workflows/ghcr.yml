@@ -46,4 +46,4 @@ jobs:
         url: 'https://watchtower.bjacobel.com/v1/update?image=ghcr.io/bjacobel/trackr'
         bearerToken: ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}
         customHeaders: '{"User-Agent": "fjogeleit/http-request-action@v1 [via GitHub]"}'
-        timeout: 20000
+        timeout: 60000
