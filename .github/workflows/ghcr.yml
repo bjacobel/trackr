@@ -39,3 +39,9 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Tell Watchtower on my Homelab to pull this new image
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://watchtower.bjacobel.com/v1/update?image=ghcr.io/bjacobel/trackr'
+        customHeaders: '{"Authorization": "Bearer ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}}'
