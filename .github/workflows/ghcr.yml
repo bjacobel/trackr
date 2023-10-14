@@ -43,6 +43,7 @@ jobs:
         build-args: |
           OPENTSDB_HOST=${{ vars.OPENTSDB_HOST }}
           NEXT_PUBLIC_TRACKD_RELATIVE=${{ vars.NEXT_PUBLIC_TRACKD_RELATIVE }}
+          FOO=bar
 
     - name: Tell Watchtower on my Homelab to pull this new image
       uses: fjogeleit/http-request-action@v1
