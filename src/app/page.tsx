@@ -8,8 +8,7 @@ import Submit from '@/app/Submit';
 import Slider from '@/app/Slider';
 import trackrReducer, { initialState } from '@/data/trackrReducer';
 import { createTrackrDatapoints } from '@/data/opentsdb';
-import PwaUpdater from './PwaUpdater';
-import { PRODUCTION } from '@/constants';
+import { PWALifeCycle } from '@/app/PwaUpdater';
 
 export default function Home() {
   const [state, dispatch] = useReducer(trackrReducer, initialState);
@@ -25,7 +24,7 @@ export default function Home() {
   return (
     <main className="h-screen bg-gray-100 font-sans leading-normal tracking-normal">
       <div className="w-full md:max-w-md mx-auto flex flex-wrap items-center justify-between py-3 px-4">
-        {PRODUCTION && <PwaUpdater />}
+        <PWALifeCycle />
         <form className="w-full mt-3" action={submit}>
           {!HAS_CATS && <p className="w-full mb-5 text-center">Add some stuff to track!</p>}
           {TRACKR_CATS.map(category =>
