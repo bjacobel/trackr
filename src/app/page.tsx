@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useReducer, useState } from 'react';
+import { useReducer, useState } from 'react';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 
 import { TRACKR_CATS, HAS_CATS } from '@/constants';
@@ -37,7 +37,7 @@ export default function Home() {
               />
             ) : null,
           )}
-          <Submit disabled={!HAS_CATS} pending={pending} />
+          <Submit className="mt-7" disabled={!HAS_CATS} pending={pending} />
         </form>
         <p className="mt-6">{resultMessage}</p>
       </div>
