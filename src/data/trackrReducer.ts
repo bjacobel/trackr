@@ -19,7 +19,7 @@ export default function trackrReducer(state: TrackrState, action: TrackrAction) 
 
   const newState = { ...state };
 
-  if (action.type === 'set' && action.category && action.value) {
+  if (action.type === 'set' && action.category && action.value !== undefined) {
     newState[action.category] = action.value;
   } else if (action.type === 'clear') {
     return { ...initialState };
