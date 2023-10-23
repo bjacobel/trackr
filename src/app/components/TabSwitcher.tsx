@@ -1,11 +1,13 @@
-import { FC, JSXElementConstructor, ReactElement, useMemo } from 'react';
+import { FC, ReactElement, useMemo } from 'react';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
+import { usePathname } from 'next/navigation';
 
 interface TabSwitcherProps {
+  initial?: string;
   children: ReactElement[];
 }
 
-export const TabSwitcher: FC<TabSwitcherProps> = ({ children }) => {
+export const TabSwitcher: FC<TabSwitcherProps> = ({ initial, children }) => {
   if (!Array.isArray(children) || !children.length) {
     throw new Error('TabSwitcher children must be a populated array');
   }
@@ -14,7 +16,7 @@ export const TabSwitcher: FC<TabSwitcherProps> = ({ children }) => {
   const tabs = useMemo(() => children.map(child => ({ name: child.type.name, component: child })), [children]);
 
   return (
-    <Tabs value={tabs[0].name} className="w-full mt-3">
+    <Tabs value={initial || tabs[0].name} className="w-full mt-3">
       <TabsHeader
         className="bg-gray-300"
         indicatorProps={{
