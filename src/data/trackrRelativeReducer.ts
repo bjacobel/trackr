@@ -1,4 +1,4 @@
-import { TRACKR_CATS } from '@/constants';
+import { TRACKR_RELATIVE_CATS } from '@/constants';
 
 interface TrackrAction {
   type: 'set' | 'clear';
@@ -10,10 +10,10 @@ export interface TrackrState {
   [category: string]: number;
 }
 
-export const initialState: TrackrState = TRACKR_CATS.reduce((prev, curr) => ({ ...prev, [curr]: '0' }), {});
+export const initialState: TrackrState = TRACKR_RELATIVE_CATS.reduce((prev, curr) => ({ ...prev, [curr]: '0' }), {});
 
 export default function trackrReducer(state: TrackrState, action: TrackrAction) {
-  if (action.category && !TRACKR_CATS.includes(action.category)) {
+  if (action.category && !TRACKR_RELATIVE_CATS.includes(action.category)) {
     return state;
   }
 

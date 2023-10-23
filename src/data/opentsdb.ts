@@ -1,7 +1,7 @@
 'use server';
 
 import { OPENTSDB_HOST, OPENTSDB_PORT, TRACKR_RELATIVE_METRIC } from '@/constants';
-import { TrackrState } from '@/data/trackrReducer';
+import { TrackrState } from '@/data/trackrRelativeReducer';
 
 const CONN_STR = `http://${OPENTSDB_HOST}:${OPENTSDB_PORT}/api/put`;
 
