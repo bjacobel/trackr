@@ -13,9 +13,9 @@ const Relative = () => {
   const { pending } = useFormStatus();
 
   const submit = async () => {
-    const tsdbResult = await createTrackrDatapoints(state);
+    const tsdbResponse = await createTrackrDatapoints(state);
     dispatch({ type: 'clear' });
-    setResultMessage(tsdbResult.error || tsdbResult.response || 'Tracked!');
+    setResultMessage(tsdbResponse.error || tsdbResponse.response || 'Tracked!');
   };
   return (
     <>

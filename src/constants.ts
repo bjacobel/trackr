@@ -5,3 +5,10 @@ export const OPENTSDB_PORT = process.env.OPENTSDB_PORT || 4242;
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 export const TRACKR_RELATIVE_METRIC = `${PRODUCTION ? '' : 'dev_'}trackr_relative`;
 export const TRACKR_ABSOLUTE_METRIC = `${PRODUCTION ? '' : 'dev_'}trackr_absolute`;
+export const LEGACY_MAPPINGS: { [legacyCat: string]: number } = {
+  '-': 0,
+  None: 0,
+  Mild: 3,
+  Moderate: 6,
+  Severe: 9,
+};
