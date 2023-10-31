@@ -40,8 +40,6 @@ export const createAnnotation = async (annotation: string): Promise<ServerAction
     ],
   };
 
-  console.log(JSON.stringify(body, null, 2));
-
   try {
     const response = await fetch(CONN_STR, {
       method: 'POST',
