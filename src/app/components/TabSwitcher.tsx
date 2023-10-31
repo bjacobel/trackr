@@ -5,7 +5,7 @@ interface TabSwitcherProps {
   initial?: string;
   tabs: {
     name: string;
-    component: ReactElement;
+    render: () => ReactElement;
   }[];
 }
 
@@ -29,9 +29,9 @@ const TabSwitcher: FC<TabSwitcherProps> = ({ initial, tabs }) => {
         ))}
       </TabsHeader>
       <TabsBody>
-        {tabs.map(({ name, component }) => (
+        {tabs.map(({ name, render }) => (
           <TabPanel key={name} value={name}>
-            {component}
+            {render()}
           </TabPanel>
         ))}
       </TabsBody>

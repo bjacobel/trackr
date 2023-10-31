@@ -3,6 +3,7 @@ import { FC } from 'react';
 import TabSwitcher from '@/app/components/TabSwitcher';
 import Relative from '@/app/containers/Relative';
 import Absolute from '@/app/containers/Absolute';
+import Annotations from '@/app/containers/Annotations';
 
 interface TabsProps {
   initial?: string;
@@ -16,11 +17,15 @@ const Tabs: FC<TabsProps> = ({ initial }) => (
         tabs={[
           {
             name: 'Relative',
-            component: <Relative />,
+            render: () => <Relative />,
           },
           {
             name: 'Absolute',
-            component: <Absolute />,
+            render: () => <Absolute />,
+          },
+          {
+            name: 'Annotations',
+            render: () => <Annotations />,
           },
         ]}
       />
