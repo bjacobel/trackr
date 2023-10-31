@@ -10,7 +10,7 @@ export interface TrackrState {
   [category: string]: number;
 }
 
-export const initialState: TrackrState = TRACKR_RELATIVE_CATS.reduce((prev, curr) => ({ ...prev, [curr]: '0' }), {});
+export const initialState: TrackrState = TRACKR_RELATIVE_CATS.reduce((prev, curr) => ({ ...prev, [curr]: 0 }), {});
 
 export default function trackrReducer(state: TrackrState, action: TrackrAction) {
   if (action.category && !TRACKR_RELATIVE_CATS.includes(action.category)) {
