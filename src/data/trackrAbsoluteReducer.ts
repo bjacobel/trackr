@@ -1,9 +1,12 @@
-import { TRACKR_RELATIVE_CATS } from '@/constants';
+import { TRACKR_ABSOLUTE_CATS } from '@/constants';
 
-export const initialState: TrackrState = TRACKR_RELATIVE_CATS.reduce((prev, curr) => ({ ...prev, [curr]: 0 }), {});
+export const initialState: TrackrState = TRACKR_ABSOLUTE_CATS.reduce(
+  (prev, curr) => ({ ...prev, [curr]: undefined }),
+  {},
+);
 
 export default function trackrReducer(state: TrackrState, action: TrackrAction) {
-  if (action.category && !TRACKR_RELATIVE_CATS.includes(action.category)) {
+  if (action.category && !TRACKR_ABSOLUTE_CATS.includes(action.category)) {
     return state;
   }
 

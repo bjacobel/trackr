@@ -9,7 +9,6 @@ import {
   TRACKR_RELATIVE_CATS,
   TRACKR_RELATIVE_METRIC,
 } from '@/constants';
-import { TrackrState } from '@/data/trackrRelativeReducer';
 
 const CONN_STR = `http://${OPENTSDB_HOST}:${OPENTSDB_PORT}/api/put`;
 
@@ -40,15 +39,20 @@ const putMetrics = async (metrics: OpenTsdbMetric[]) => {
   return { status: response.status, response: `${metrics.length} metric datapoints written` };
 };
 
-export const createTrackrDatapoints = async (data: TrackrState): Promise<ServerActionResponse> => {
+export const createTrackrDatapoints = async (
+  data: TrackrState,
+  metric: TrackrMetric,
+): Promise<ServerActionResponse> => {
   const metrics = Object.entries(data).map(([category, value]) => ({
-    metric: TRACKR_RELATIVE_METRIC,
+    metric,
     timestamp: Date.now(),
     value,
     tags: {
       category,
     },
   }));
+
+  console.log(metrics);
 
   try {
     return putMetrics(metrics);

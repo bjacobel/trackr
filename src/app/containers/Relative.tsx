@@ -1,7 +1,7 @@
 import { useReducer, useState } from 'react';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 
-import { TRACKR_RELATIVE_CATS, HAS_RELATIVE_CATS } from '@/constants';
+import { TRACKR_RELATIVE_CATS, HAS_RELATIVE_CATS, TRACKR_RELATIVE_METRIC } from '@/constants';
 import Submit from '@/app/components/Submit';
 import Slider from '@/app/components/Slider';
 import trackrRelativeReducer, { initialState } from '@/data/trackrRelativeReducer';
@@ -13,7 +13,7 @@ const Relative = () => {
   const { pending } = useFormStatus();
 
   const submit = async () => {
-    const tsdbResponse = await createTrackrDatapoints(state);
+    const tsdbResponse = await createTrackrDatapoints(state, TRACKR_RELATIVE_METRIC);
     dispatch({ type: 'clear' });
     setResultMessage(tsdbResponse.error || tsdbResponse.response || 'Tracked!');
   };
