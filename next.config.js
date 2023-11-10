@@ -10,4 +10,8 @@ const nextConfig = {
 
 module.exports = withPWA({
   dest: 'public',
+  register: false,
+  workboxOptions: {
+    skipWaiting: false,
+  },
 })(nextConfig);
