@@ -1,6 +1,6 @@
 'use server';
 
-import { LOKI_HOST, LOKI_PORT, LOKI_APPLICATION, LOKI_ANNOTATION_TYPE } from '@/constants';
+import { LOKI_HOST, LOKI_PORT, LOKI_APPLICATION } from '@/constants';
 
 const CONN_STR = `http://${LOKI_HOST}:${LOKI_PORT}/loki/api/v1/push`;
 
