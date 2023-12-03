@@ -56,6 +56,7 @@ export const createAnnotation = async (annotation: string): Promise<ServerAction
 
     return { status: response.status, response: `Annotation written` };
   } catch (e) {
+    console.error(e);
     return { status: 500, response: (e as Error).message };
   }
 };
