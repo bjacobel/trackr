@@ -3,53 +3,61 @@ name: GHCR Publish
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
+concurrency:
+  group: ${{ github.ref }}-deployment
+  cancel-in-progress: true
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Wait for CI to succeed
+        uses: lewagon/wait-on-check-action@master
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Build image'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
 
-    - name: Log in to the Container registry
-      uses: docker/login-action@v2.1.0
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v4.4.0
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4.0.0
-      with:
-        context: .
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        build-args: |
-          OPENTSDB_HOST=${{ vars.OPENTSDB_HOST }}
-          LOKI_HOST=${{ vars.LOKI_HOST }}
-          NEXT_PUBLIC_TRACKD_RELATIVE=${{ vars.NEXT_PUBLIC_TRACKD_RELATIVE }}
-          FOO=bar
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Tell Watchtower on my Homelab to pull this new image
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: 'https://watchtower.bjacobel.com/v1/update?image=ghcr.io/bjacobel/trackr'
-        bearerToken: ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}
-        customHeaders: '{"User-Agent": "fjogeleit/http-request-action@v1 [via GitHub]"}'
-        timeout: 60000
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            OPENTSDB_HOST=${{ vars.OPENTSDB_HOST }}
+            LOKI_HOST=${{ vars.LOKI_HOST }}
+            NEXT_PUBLIC_TRACKD_RELATIVE=${{ vars.NEXT_PUBLIC_TRACKD_RELATIVE }}
+            FOO=bar
+
+      - name: Tell Watchtower on my Homelab to pull this new image
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://watchtower.bjacobel.com/v1/update?image=ghcr.io/bjacobel/trackr'
+          bearerToken: ${{ secrets.WATCHTOWER_HTTP_API_TOKEN }}
+          customHeaders: '{"User-Agent": "fjogeleit/http-request-action@v1 [via GitHub]"}'
+          timeout: 60000
